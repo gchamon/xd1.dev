@@ -1,3 +1,0 @@
-Type: Page
-
-# Feeds
