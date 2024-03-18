@@ -59,12 +59,20 @@ if ($diff == '') {
         if (substr($file, -1) == '"') $file = substr($file, 0, -1);
 
         $foldersToSync = array("weblog/", "configuration/", "css/", "js/");
-        $shouldSyncFile = array_reduce($foldersToSync, function ($shouldSync, $folder) use ($file) {
+        $compare = "beginning";
+        $checkSync = function ($shouldSync, $folder) use ($file, $compare) {
             if ($shouldSync != true) {
-                $shouldSync = strtolower(substr($file, 0, strlen($folder))) === $folder;
+                if ($compare === "beginning") {
+                    $shouldSync = strtolower(substr($file, 0, strlen($folder))) === $folder;
+                } else if ($compare === "end") {
+                    $shouldSync = strtolower(substr($file, 0, -strlen($folder))) === $folder;
+                } else {
+                    throw new Exception("Unkown comparison $compare");
+                }
             }
             return $shouldSync;
-        }, false);
+        };
+        $shouldSyncFile = array_reduce($foldersToSync, $checkSync, false);
         // if (strtolower(substr($file, 0, 7)) !== 'weblog/' && strtolower(substr($file, 0, 14)) !== 'configuration/') {
         //     echo "\n*** Skipping file: $file";
         //     continue;
@@ -92,7 +100,10 @@ if ($diff == '') {
             curl_close($ch);
         }
 
-        if (substr(strtolower($file), -3) !== '.md' && substr(strtolower($file), -9) !== '.markdown') {
+        $extensionsToSync = array(".md", ".markdown", ".js", ".css", ".txt", ".html");
+        $compare = "end";
+        $shouldSyncFile = array_reduce($extensionsToSync, $checkSync, false);
+        if ($shouldSyncFile === true) {
             echo "\n*** File doesn’t end in .md or .markdown; skipping.";
             continue;
         }
