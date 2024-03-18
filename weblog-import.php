@@ -100,7 +100,7 @@ if ($diff == '') {
             curl_close($ch);
         }
 
-        $extensionsToSync = array(".md", ".markdown", ".js", ".css", ".txt", ".html");
+        $extensionsToSync = array(".md", ".markdown", ".js", ".css");
         $compare = "end";
         $shouldSyncFile = array_reduce($extensionsToSync, $checkSync, false);
         if ($shouldSyncFile === true) {
