@@ -10,8 +10,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
-      - id: weblog_import
-        uses: neatnik/weblog.lol@v1
+            # - id: weblog_import
+            #   uses: neatnik/weblog.lol@v1
+      - run: php -f weblog-import.php $ADDRESS $WEBLOG_API_KEY
+        shell: bash
         env:
           ADDRESS: xd1
           WEBLOG_API_KEY: ${{ secrets.WEBLOG_API_KEY }}
