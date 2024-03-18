@@ -79,7 +79,7 @@ if ($diff == '') {
         // }
 
         if ($shouldSyncFile === false) {
-            echo "\n*** Skipping file: $file";
+            echo "\n*** $file not in one of the dirs " . implode(" or ", $foldersToSync) . "; skipping...";
             continue;
         }
 
@@ -104,7 +104,7 @@ if ($diff == '') {
         $compare = "end";
         $shouldSyncFile = array_reduce($extensionsToSync, $checkSync, false);
         if ($shouldSyncFile === true) {
-            echo "\n*** File doesn’t end in .md or .markdown; skipping.";
+            echo "\n*** $file doesn’t end in " . implode(" or ", $extensionsToSync) . "; skipping.";
             continue;
         }
 
