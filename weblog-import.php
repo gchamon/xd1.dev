@@ -87,6 +87,7 @@ if ($diff == '') {
 
         if (strtolower($file) == 'configuration/configuration.txt' || strtolower($file) == 'weblog/configuration/configuration.txt') {
             $configuration_update = $file;
+            continue;
         }
         if (strtolower($file) == 'configuration/template.html' || strtolower($file) == 'weblog/configuration/template.html') {
             echo "\n*** Updating template...";
@@ -98,6 +99,7 @@ if ($diff == '') {
             curl_setopt($ch, CURLOPT_XOAUTH2_BEARER, $argv[2]);
             $response = curl_exec($ch);
             curl_close($ch);
+            continue;
         }
 
         $extensionsToSync = array(".md", ".markdown", ".js", ".css");
