@@ -59,20 +59,21 @@ if ($diff == '') {
         if (substr($file, -1) == '"') $file = substr($file, 0, -1);
 
         $foldersToSync = array("weblog/", "configuration/", "css/", "js/");
-        $compare = "beginning";
-        $checkSync = function ($shouldSync, $folder) use ($file, $compare) {
-            if ($shouldSync != true) {
-                if ($compare === "beginning") {
-                    $shouldSync = strtolower(substr($file, 0, strlen($folder))) === $folder;
-                } else if ($compare === "end") {
-                    $shouldSync = strtolower(substr($file, 0, -strlen($folder))) === $folder;
-                } else {
-                    throw new Exception("Unkown comparison $compare");
+        $checkSync = function ($compare) use ($file) {
+            return function ($shouldSync, $substring) use ($file, $compare) {
+                if ($shouldSync === false) {
+                    if ($compare === "beginning") {
+                        $shouldSync = str_starts_with($file, $substring);
+                    } else if ($compare === "end") {
+                        $shouldSync = str_ends_with($file, $substring);
+                    } else {
+                        throw new Exception("Unkown comparison $compare");
+                    }
                 }
-            }
-            return $shouldSync;
+                return $shouldSync;
+            };
         };
-        $shouldSyncFile = array_reduce($foldersToSync, $checkSync, false);
+        $shouldSyncFile = array_reduce($foldersToSync, $checkSync("beginning"), false);
         // if (strtolower(substr($file, 0, 7)) !== 'weblog/' && strtolower(substr($file, 0, 14)) !== 'configuration/') {
         //     echo "\n*** Skipping file: $file";
         //     continue;
@@ -87,6 +88,7 @@ if ($diff == '') {
 
         if (strtolower($file) == 'configuration/configuration.txt' || strtolower($file) == 'weblog/configuration/configuration.txt') {
             $configuration_update = $file;
+            echo "\n*** Caught a configuration change. This will be triggered at the very end.";
             continue;
         }
         if (strtolower($file) == 'configuration/template.html' || strtolower($file) == 'weblog/configuration/template.html') {
@@ -103,9 +105,8 @@ if ($diff == '') {
         }
 
         $extensionsToSync = array(".md", ".markdown", ".js", ".css");
-        $compare = "end";
-        $shouldSyncFile = array_reduce($extensionsToSync, $checkSync, false);
-        if ($shouldSyncFile === true) {
+        $shouldSyncExt = array_reduce($extensionsToSync, $checkSync("end"), false);
+        if ($shouldSyncExt === true) {
             echo "\n*** $file doesn’t end in " . implode(" or ", $extensionsToSync) . "; skipping.";
             continue;
         }
