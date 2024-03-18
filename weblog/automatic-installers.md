@@ -10,3 +10,9 @@ This is a quick post about a little headache I got with my current Linux/Windows
 code = "test"
 ```
 
+```c
+int main() {
+   printf("Hello World");
+   return 0;
+}
+```
