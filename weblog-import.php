@@ -115,7 +115,7 @@ if (!function_exists('mime_content_type')) {
 function get_file_contents_with_header($file)
 {
     $file_contents = file_get_contents($file);
-    if (!str_ends_with($file, ".md") || !str_ends_with($file, ".markdown")) {
+    if (!str_ends_with($file, ".md") && !str_ends_with($file, ".markdown")) {
         $mime_type = mime_content_type($file);
         $filename = basename($file);
         $header = "Type: file
