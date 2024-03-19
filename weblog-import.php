@@ -46,7 +46,7 @@ function get_mime_content_type($filename)
         'html' => 'text/html',
         'php' => 'text/html',
         'css' => 'text/css',
-        'js' => 'application/javascript',
+        'js' => 'text/javascript',
         'json' => 'application/json',
         'xml' => 'application/xml',
         'swf' => 'application/x-shockwave-flash',
