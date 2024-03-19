@@ -36,6 +36,100 @@ if ($diff == '') {
     }
 }
 
+if (!function_exists('mime_content_type')) {
+
+    function mime_content_type($filename)
+    {
+
+        $mime_types = array(
+
+            'txt' => 'text/plain',
+            'htm' => 'text/html',
+            'html' => 'text/html',
+            'php' => 'text/html',
+            'css' => 'text/css',
+            'js' => 'application/javascript',
+            'json' => 'application/json',
+            'xml' => 'application/xml',
+            'swf' => 'application/x-shockwave-flash',
+            'flv' => 'video/x-flv',
+
+            // images
+            'png' => 'image/png',
+            'jpe' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'ico' => 'image/vnd.microsoft.icon',
+            'tiff' => 'image/tiff',
+            'tif' => 'image/tiff',
+            'svg' => 'image/svg+xml',
+            'svgz' => 'image/svg+xml',
+
+            // archives
+            'zip' => 'application/zip',
+            'rar' => 'application/x-rar-compressed',
+            'exe' => 'application/x-msdownload',
+            'msi' => 'application/x-msdownload',
+            'cab' => 'application/vnd.ms-cab-compressed',
+
+            // audio/video
+            'mp3' => 'audio/mpeg',
+            'qt' => 'video/quicktime',
+            'mov' => 'video/quicktime',
+
+            // adobe
+            'pdf' => 'application/pdf',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'ai' => 'application/postscript',
+            'eps' => 'application/postscript',
+            'ps' => 'application/postscript',
+
+            // ms office
+            'doc' => 'application/msword',
+            'rtf' => 'application/rtf',
+            'xls' => 'application/vnd.ms-excel',
+            'ppt' => 'application/vnd.ms-powerpoint',
+
+            // open office
+            'odt' => 'application/vnd.oasis.opendocument.text',
+            'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+        );
+
+        $exploded_filename = explode('.', $filename);
+        $ext = strtolower(array_pop($exploded_filename));
+        if (array_key_exists($ext, $mime_types)) {
+            return $mime_types[$ext];
+        } elseif (function_exists('finfo_open')) {
+            $finfo = finfo_open(FILEINFO_MIME);
+            $mimetype = finfo_file($finfo, $filename);
+            finfo_close($finfo);
+            return $mimetype;
+        } else {
+            return 'application/octet-stream';
+        }
+    }
+}
+
+function get_file_contents_with_header($file)
+{
+    $file_contents = file_get_contents($file);
+    if (!str_ends_with($file, ".md") || !str_ends_with($file, ".markdown")) {
+        $mime_type = mime_content_type($file);
+        $filename = basename($file);
+        $header = "Type: file
+Content-Type: $mime_type
+Title: $filename
+Location: /$filename
+        
+";
+        return $header . $file_contents;
+    } else {
+        return $file_contents;
+    }
+}
+
 // Now process all of the other changed content
 $diff = shell_exec('git diff --name-only HEAD^..HEAD');
 if ($diff == '') {
@@ -58,16 +152,16 @@ if ($diff == '') {
         if (substr($file, 0, 1) == '"') $file = substr($file, 1);
         if (substr($file, -1) == '"') $file = substr($file, 0, -1);
 
-        $foldersToSync = array("weblog/", "configuration/", "css/", "js/");
-        $checkSync = function (callable $comparator) use ($file) {
-            return function ($shouldSync, $substring) use ($file, $comparator) {
-                return $shouldSync ? $shouldSync : $comparator($file, $substring);
+        $folders_to_sync = array("weblog/", "configuration/", "css/", "js/");
+        $check_sync = function (callable $comparator) use ($file) {
+            return function ($should_sync, $substring) use ($file, $comparator) {
+                return $should_sync ? $should_sync : $comparator($file, $substring);
             };
         };
-        $shouldSyncFile = array_reduce($foldersToSync, $checkSync('str_starts_with'), false);
+        $should_sync_file = array_reduce($folders_to_sync, $check_sync('str_starts_with'), false);
 
-        if ($shouldSyncFile === false) {
-            echo "\n*** $file not in one of the dirs " . implode(" or ", $foldersToSync) . "; skipping...";
+        if ($should_sync_file === false) {
+            echo "\n*** $file not in one of the dirs " . implode(" or ", $folders_to_sync) . "; skipping...";
             continue;
         }
 
@@ -91,10 +185,10 @@ if ($diff == '') {
             continue;
         }
 
-        $extensionsToSync = array(".md", ".markdown", ".js", ".css");
-        $shouldSyncExt = array_reduce($extensionsToSync, $checkSync('str_ends_with'), false);
-        if ($shouldSyncExt === false) {
-            echo "\n*** $file doesn’t end in " . implode(" or ", $extensionsToSync) . "; skipping.";
+        $extensions_to_sync = array(".md", ".markdown", ".js", ".css");
+        $should_sync_ext = array_reduce($extensions_to_sync, $check_sync('str_ends_with'), false);
+        if ($should_sync_ext === false) {
+            echo "\n*** $file doesn’t end in " . implode(" or ", $extensions_to_sync) . "; skipping.";
             continue;
         }
 
@@ -108,7 +202,7 @@ if ($diff == '') {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, 'https://api.omg.lol/address/' . $argv[1] . '/weblog/entry/' . urlencode($filename));
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, file_get_contents($file));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, get_file_contents_with_header($file));
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BEARER);
             curl_setopt($ch, CURLOPT_XOAUTH2_BEARER, $argv[2]);
             $response = curl_exec($ch);
