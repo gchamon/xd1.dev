@@ -11,4 +11,3 @@ This is a quick entry, nothing of substance, just to test my interface, check if
 You should be able to access this through xd1.dev, my nicer-on-the-eyes-hopefully domain, and also xd1.weblog.lol, which is also cute I guess.
 
 More to come.
-
