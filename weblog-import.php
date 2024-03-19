@@ -59,25 +59,12 @@ if ($diff == '') {
         if (substr($file, -1) == '"') $file = substr($file, 0, -1);
 
         $foldersToSync = array("weblog/", "configuration/", "css/", "js/");
-        $checkSync = function ($compare) use ($file) {
-            return function ($shouldSync, $substring) use ($file, $compare) {
-                if ($shouldSync === false) {
-                    if ($compare === "beginning") {
-                        $shouldSync = str_starts_with($file, $substring);
-                    } else if ($compare === "end") {
-                        $shouldSync = str_ends_with($file, $substring);
-                    } else {
-                        throw new Exception("Unkown comparison $compare");
-                    }
-                }
-                return $shouldSync;
+        $checkSync = function (callable $comparator) use ($file) {
+            return function ($shouldSync, $substring) use ($file, $comparator) {
+                return $shouldSync ? $shouldSync : $comparator($file, $substring);
             };
         };
-        $shouldSyncFile = array_reduce($foldersToSync, $checkSync("beginning"), false);
-        // if (strtolower(substr($file, 0, 7)) !== 'weblog/' && strtolower(substr($file, 0, 14)) !== 'configuration/') {
-        //     echo "\n*** Skipping file: $file";
-        //     continue;
-        // }
+        $shouldSyncFile = array_reduce($foldersToSync, $checkSync('str_starts_with'), false);
 
         if ($shouldSyncFile === false) {
             echo "\n*** $file not in one of the dirs " . implode(" or ", $foldersToSync) . "; skipping...";
@@ -105,8 +92,8 @@ if ($diff == '') {
         }
 
         $extensionsToSync = array(".md", ".markdown", ".js", ".css");
-        $shouldSyncExt = array_reduce($extensionsToSync, $checkSync("end"), false);
-        if ($shouldSyncExt === true) {
+        $shouldSyncExt = array_reduce($extensionsToSync, $checkSync('str_ends_with'), false);
+        if ($shouldSyncExt === false) {
             echo "\n*** $file doesn’t end in " . implode(" or ", $extensionsToSync) . "; skipping.";
             continue;
         }
