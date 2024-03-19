@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {feeds}
     <link rel="stylesheet" href="/prism.css">
+    <link rel="stylesheet" href="/blade-runner-theme.css">
     <style>
         @import url('https://static.omg.lol/type/font-honey.css');
         @import url('https://static.omg.lol/type/font-lato-regular.css');
@@ -14,22 +15,6 @@
         @import url('https://static.omg.lol/type/font-lato-italic.css');
         @import url('https://static.omg.lol/type/font-md-io.css');
         @import url('https://static.omg.lol/type/fontawesome-free/css/all.css');
-
-        :root {
-            --foreground: #212529;
-            --background: #f8f9fa;
-            --link: #0b7285;
-            --accent: #868e96;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --foreground: #eee;
-                --background: #222;
-                --link: #99e9f2;
-                --accent: #ced4da;
-            }
-        }
 
         * {
             box-sizing: border-box;
@@ -40,6 +25,17 @@
             font-size: 120%;
             color: var(--foreground);
             background: var(--background);
+        }
+
+        .content-page {
+            border-radius: 1em 5em 1em 1em;
+            background-color: var(--background-content);
+            margin: 2em 12em;
+            display: flex;
+            flex-direction: column;
+            border-color: var(--content-border);
+            border-width: 5px;
+            border-style: solid;
         }
 
         header nav ul {
@@ -180,27 +176,29 @@
 
 <body>
     <script src="/prism.js"></script>
-    <header>
-        <h1 class="weblog-title"><a href="{base-path}">{weblog-title}</a></h1>
-        {navigation}
-    </header>
-    <main>
-        <article>
-            {body}
-            <aside class="post-info">
-                <i class="fa-solid fa-clock"></i> {date}
-            </aside>
-            <aside class="post-tags">
-                {tags}
-            </aside>
-        </article>
-        <hr>
-        <h2>Recent posts</h2>
-        {recent-posts}
-    </main>
-    <footer>
-        <p>Made with <a href="https://weblog.lol">weblog.lol</a>.</p>
-    </footer>
+    <div class="content-page">
+        <header>
+            <h1 class="weblog-title"><a href="{base-path}">{weblog-title}</a></h1>
+            {navigation}
+        </header>
+        <main>
+            <article>
+                {body}
+                <aside class="post-info">
+                    <i class="fa-solid fa-clock"></i> {date}
+                </aside>
+                <aside class="post-tags">
+                    {tags}
+                </aside>
+            </article>
+            <hr>
+            <h2>Recent posts</h2>
+            {recent-posts}
+        </main>
+        <footer>
+            <p>Made with <a href="https://weblog.lol">weblog.lol</a>.</p>
+        </footer>
+    </div>
 </body>
 
 </html>

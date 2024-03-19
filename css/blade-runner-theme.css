@@ -1,0 +1,10 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #e6fcf9;
+    --background: #1f3341;
+    --link: #fe7600;
+    --accent: #319caa;
+    --background-content: #101014;
+    --content-border: #fe2e01;
+  }
+}
