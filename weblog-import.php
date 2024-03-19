@@ -119,7 +119,7 @@ function get_file_contents_with_header($file)
 Content-Type: $mime_type
 Title: $filename
 Location: /$filename
-        
+
 ";
         return $header . $file_contents;
     } else {
