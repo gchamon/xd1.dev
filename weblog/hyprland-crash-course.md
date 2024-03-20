@@ -193,7 +193,7 @@ grimblast --cursor edit area
 
 And a `captureAll.sh` script:
 
-```
+```shell
 #!/bin/bash
 set -euo pipefail
 
