@@ -107,6 +107,10 @@ bind = $mainMod SHIFT, R, exec, $shellMenu
 bind = $mainMod CTRL SHIFT, R, exec, $terminalMenu
 ```
 
+This way you can have a separate history with frequency tracking for rofi:
+
+![rofi-shell-history](https://raw.githubusercontent.com/gchamon/xd1.dev/main/images/hyprland-crash-course/rofi-shell-history.png)
+
 ### Waybar
 
 You can just start using waybar, but if you want to customize it, it won't reload by itself. I use [this script](https://github.com/Alexays/Waybar/issues/961#issuecomment-753533975)
