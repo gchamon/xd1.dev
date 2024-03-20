@@ -18,3 +18,21 @@
     --code-background: #2d2d2d;
   }
 }
+
+.content-page {
+    border-radius: 1em 5em 1em 1em;
+    background-color: var(--background-content);
+    margin: 5% 8%;
+    flex-direction: column;
+    border-color: var(--content-border);
+    border-width: 5px;
+    border-style: solid;
+}
+
+@media (max-width: 500px) and (orientation: portrait)  {
+  .content-page {
+    margin: 0em;
+    border-width: 1px;
+  }
+}
+
