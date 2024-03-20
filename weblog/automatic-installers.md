@@ -7,5 +7,5 @@ Date: 2024-02-08 00:57
 This is a quick post about a little headache I got with my current Linux/Windows installation.
 
 ```bash
-[%[ $FOO ]]
+[[ $FOO ]]
 ```

@@ -127,6 +127,13 @@ Location: /$filename
     }
 }
 
+function fix_pagelinks_render($file_contents)
+{
+    $file_contents = str_replace("[[", "[%[", $file_contents);
+    $file_contents = str_replace("\[%[", "[[", $file_contents);
+    return $file_contents;
+}
+
 // Now process all of the other changed content
 $diff = shell_exec('git diff --name-only HEAD^..HEAD');
 if ($diff == '') {
@@ -197,9 +204,13 @@ if ($diff == '') {
         if (file_exists($file)) {
             echo "\n*** Updating file: $file...";
             $ch = curl_init();
+            $file_contents = get_file_contents_with_header($file);
+            if (str_ends_with($file, '.md') || str_ends_with($file, '.markdown')) {
+                $file_contents = fix_pagelinks_render($file_contents);
+            }
             curl_setopt($ch, CURLOPT_URL, 'https://api.omg.lol/address/' . $argv[1] . '/weblog/entry/' . urlencode($filename));
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, get_file_contents_with_header($file));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $file_contents);
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BEARER);
             curl_setopt($ch, CURLOPT_XOAUTH2_BEARER, $argv[2]);
             $response = curl_exec($ch);
