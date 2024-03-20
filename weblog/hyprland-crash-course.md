@@ -29,9 +29,7 @@ I could just ditch GNOME.
 So what I really aim to do after you have a working hyprland setup is the following:
 
 - My scripts;
-- My shortcuts;
 - How to screenshot;
-- Theming;
 - Some tips and tricks I came across;
 
 ## The master tutorial
@@ -129,3 +127,168 @@ done
 ```
 
 Which you can launch by changing how you launch waybar with hyprland to `exec-once = ~/.config/hypr/scripts/launch-waybar.sh`.
+
+### Dunst notification sounds
+
+You can configure dunst to play notification sounds by following [this comment](https://github.com/dunst-project/dunst/issues/257) on github.
+However powersaving policies, most likely from the bluetooth protocol, prevents my headphones to play music straight away. It would only play
+the end of the audio from *A link to the past*. To work around this I use [this 500ms silent mp3 file](https://github.com/anars/blank-audio/blob/master/500-milliseconds-of-silence.mp3)
+to warm up my device. Needless to say it introduces a half-second latency to every notification sound, but it does the job. The script will then look like this:
+
+```shell
+#!/bin/bash
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+source "$HOME/.zshenv"
+
+if [[ "$DUNST_QUIET" != "true" ]]; then
+    # warm up audio device in case of powersave policies (like bluetooth)
+    pw-play $SCRIPT_DIR/../assets/500-milliseconds-of-silence.mp3
+    pw-play $SCRIPT_DIR/../assets/link.mp3
+fi
+```
+
+As you can see I also implemented a quiet mode by setting `DUNST_QUIET=true` in `.zshenv`. Yes, bash and zsh shouldn't mix but let this slide, please :D
+
+### Wayland lock screen
+
+I use [sawlock-effects](https://aur.archlinux.org/packages/swaylock-effects) for locking my screen. The script looks like this
+(just so that it doesn't clutter the hyprland config file):
+
+```shell
+#!/usr/bin/env bash
+
+swaylock \
+    --image /usr/share/backgrounds/archlinux/split.png \
+    --clock \
+    --indicator \
+    --indicator-radius 100 \
+    --indicator-thickness 7 \
+    --effect-blur 7x5 \
+    --effect-vignette 0.5:0.5 \
+    --ring-color bb00cc \
+    --key-hl-color 880033 \
+    --line-color 00000000 \
+    --inside-color 00000088 \
+    --separator-color 00000000 \
+    --fade-in 1
+
+```
+
+And I invoke it with `bind = $mainMod, L, exec, ~/.config/hypr/scripts/wayland-lock.sh`.
+
+### Screenshot with editor
+
+I use [grimblast](https://github.com/hyprwm/contrib/tree/main/grimblast) from [aur](https://aur.archlinux.org/packages/grimblast-git)
+together with [ksnip](https://github.com/ksnip/ksnip), which is available from the `extra` packages.
+
+There is a `captureArea.sh` script:
+
+```shell
+#!/bin/bash
+
+export GRIMBLAST_EDITOR=ksnip
+grimblast --cursor edit area
+```
+
+And a `captureAll.sh` script:
+
+```
+#!/bin/bash
+set -euo pipefail
+
+SCREENSHOT_FILENAME=$(date +'%Y-%m-%dT%H:%M:%S%z_grim.png')
+SCREENSHOT_FILENAME_ABSOLUTE=$HOME/Pictures/Screenshots/$SCREENSHOT_FILENAME
+
+notify-send --app-name=grim --urgency=normal --category=screenshot "Capturing entire screen to $SCREENSHOT_FILENAME_ABSOLUTE"
+grim $SCREENSHOT_FILENAME_ABSOLUTE
+```
+
+Which I launch with
+
+```conf
+bind = SHIFT, 107, exec, ~/.config/hypr/scripts/screenshot/captureAll.sh
+bind = , 107, exec, ~/.config/hypr/scripts/screenshot/captureArea.sh
+```
+
+The number `107` being the PrintScreen key. It can also be referenced by `Print`, but for some reason I left it with the code.
+
+**BTW** you can use `wev` and get codes from keys you press and just use them in hyprland config.
+
+### Kill hyprland if stuck on exit
+
+Hyprland, at least for me, will randomly freeze on a blackscreen upon exit. [This issue](https://github.com/hyprwm/Hyprland/issues/3558) covers the problem
+and also offers a workaround by using this script:
+
+```
+echo "Hyprland exit" | systemd-cat -t coffebar -p info
+hyprctl dispatch exit &
+sleep 10
+echo "Hyprland failed to exit" | systemd-cat -t coffebar -p err
+killall -9 Hyprland
+```
+
+You can then just call it with `SUPER+M` instead of dispatching exit directly. It won't solve the problem, but at least you don't need to reboot everytime it happens.
+
+## Quick tips
+
+These are some quick references to tips and tricks I came across during this last few days.
+
+### Multiple keyboard layouts
+
+Since I have two keyboards with two different layouts (a us mx-keys and a br-abnt2 built-in keyboard on my notebook) it wasn't clear for me how I should configure hyprland.
+At first I was looking for a way to display the current keyboard and maybe toggle it with waybar, but I quickly realised that hyprland toggle will work only for the keyboard which
+pressed the toggle key.
+
+However you can set different layouts for different devices in `hyprland.conf`. My configuration looks like this:
+
+```conf
+input {
+    kb_layout = br
+    kb_variant = abnt2
+    # ...
+}
+
+device:logitech-mx-keys {
+    kb_layout = us
+    kb_variant = intl
+}
+
+```
+
+This is nice because I get consistent layout configuration with whatever keyboard I use. You can find which input devices you have with `hyprctl devices`.
+
+### Waybar on-click actions
+
+After applying [cjbassi's theme](https://github.com/cjbassi/config/tree/master/.config/waybar) I wanted more functionality for my bar.
+**BTW** you can find more themes [here](https://github.com/Alexays/Waybar/wiki/Examples).
+
+First, you should install `pamixer` so that clicking on the volume to mute works.
+Oh, and install `otf-font-awesome`, otherwise the nice icons won't render.
+
+Then I mapped:
+
+- pulseaudio
+  - Right click: `pavucontrol`
+- memory
+  - Left click: `gnome-system-monitor --show-processes-tab`
+- cpu
+  - Right click: `kitty top`
+  - Left click: `gnome-system-motnitor --show-resources-tab`
+- battery
+  - Left click: `tlpui`
+- disk
+  - Left click: `kitty ncdu ~`
+  - Right click: `gnome-system-monitor --show-file-systems-tab`
+
+I thought about leaving right-click on disk to open `ncdu` on root, but it takes an ungodly amount of time to go through the files in my NAS, but you could do that
+if this isn't a problem for you.
+
+
+### gnome-keyring
+
+Just a headsup: if you enter a wrong password for your ssh keys, it won't complain, there won't be a warning, `ssh-add` will just gobble 100% cpu and `ssh` or `git clone`
+will just hang there. You will have to kill it with `pkill ssh-add`. To fix this, open `seahorse`, go to `Login` and remove the offending ssh key password there.
+Just **don't** remove it from `OpenSSH Keys` tab as it will delete the keys themselves.
+
+Also, either use this or [keychain](https://wiki.archlinux.org/title/SSH_keys#Keychain), never both.
