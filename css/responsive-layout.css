@@ -8,7 +8,7 @@
     border-style: solid;
 }
 
-@media only screen and (max-width: 800px) and (orientation: portrait)  {
+@media only screen and (max-width: 800px) {
     .content-page {
         margin: 0em;
         border-width: 1px;
