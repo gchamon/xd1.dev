@@ -51,6 +51,7 @@ After the master tutorial you should take a look at:
 - [Screen sharing](https://wiki.hyprland.org/Useful-Utilities/Screen-Sharing/)
 - [App launchers](https://wiki.hyprland.org/Useful-Utilities/App-Launchers/)
 - [Status bars](https://wiki.hyprland.org/Useful-Utilities/Status-Bars/)
+- [Clipboard managers](https://wiki.hyprland.org/Useful-Utilities/Clipboard-Managers/)
 - [gnome-keyring SSH Keys](https://wiki.archlinux.org/title/GNOME/Keyring#SSH_keys)
 
 You would probably also need [nm-applet and blueman-applet](https://www.reddit.com/r/hyprland/comments/165hhd9/comment/jye2bhm/).
