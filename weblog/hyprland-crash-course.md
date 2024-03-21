@@ -1,5 +1,6 @@
 ---
 Date: 2024-03-18 13:53
+Tags: tutorial, tech, linux
 ---
 
 # Hyprland crash course
