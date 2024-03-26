@@ -5,6 +5,7 @@
     --accent: #1f3341;
     --content-border: #fe2e01;
     --code-background: #fff;
+    --mermaid-background-color: #b6e8e5;
 }
 
 @media (prefers-color-scheme: dark) {
