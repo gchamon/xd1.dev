@@ -8,6 +8,11 @@
     border-style: solid;
 }
 
+svg[id^="mermaid-"] {
+    min-width: 600px;
+    max-width: 1000px;
+}
+
 @media only screen and (max-width: 800px) {
     .content-page {
         margin: 0em;
@@ -15,6 +20,10 @@
     }
     code {
         font-size: 0.8em !important;
+    }
+    svg[id^="mermaid-"] {
+        min-width: 200px;
+        max-width: 600px;
     }
 }
 
@@ -25,5 +34,9 @@
     }
     code {
         font-size: 0.9em !important;
+    }
+    svg[id^="mermaid-"] {
+        min-width: 400px;
+        max-width: 800px;
     }
 }
