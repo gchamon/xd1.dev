@@ -255,7 +255,8 @@ input {
     # ...
 }
 
-device:logitech-mx-keys {
+device {
+    name = logitech-mx-keys
     kb_layout = us
     kb_variant = intl
 }
