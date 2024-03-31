@@ -139,7 +139,7 @@ function replace_github_image_urls($file_contents)
     $branch_name = getenv("GITHUB_REF_NAME");
     $github_repository = getenv("GITHUB_REPOSITORY");
     return preg_replace(
-        '/!\[(.*)]\(\/(.*)\)/',
+        '/!\[(.*)]\(\/(.*)\)$/m',
         "![$1](https://raw.githubusercontent.com/$github_repository/$branch_name/$2)",
         $file_contents
     );

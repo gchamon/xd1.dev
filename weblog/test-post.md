@@ -154,7 +154,7 @@ they should be rewritten with the full URL, thus working on both platforms witho
 I write therefore:
 
 ```markdown
-![test-image](/images/test-image.jpg)<!--- this should disable rewriting feature -->
+![test-image](/images/test-image.jpg)<!--- this comment disables the rewrite feature -->
 ```
 
 And weblog should see:
