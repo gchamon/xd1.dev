@@ -148,8 +148,22 @@ classDiagram
 
 ## Easier images from github
 
-This feature should rewrite image tags when syncrhonizing articles to weblog. I should only have to write relative paths to github, but when sending to weblog
+This feature should rewrite image tags when synchronizing articles to weblog. I should only have to write relative paths to github, but when sending to weblog
 they should be rewritten with the full URL, thus working on both platforms without me having to commit the full URL.
+
+I write therefore:
+
+```markdown
+![test-image](/images/test-image.jpg)<!--- this should disable rewriting feature -->
+```
+
+And weblog should see:
+
+```markdown
+![test-image](https://raw.githubusercontent.com/gchamon/xd1.dev/images/test-image.jpg)
+```
+
+The following is the test image:
 
 ![test-image](/images/test-image.jpg)
 
