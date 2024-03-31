@@ -140,4 +140,4 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 fi
 ```
 
-Why it was there, I will never know, the need for it being lost to time and buried in sand. But one lesson will remain, which is to **clean you HOME folder**.
+Why it was there, I will never know, the need for it being lost to time and buried in sand. But one lesson will remain, which is to **clean your HOME folder**.
