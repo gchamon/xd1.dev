@@ -134,6 +134,17 @@ function fix_pagelinks_render($file_contents)
     return $file_contents;
 }
 
+function replace_github_image_urls($file_contents)
+{
+    $branch_name = getenv("GITHUB_REF_NAME");
+    $github_repository = getenv("GITHUB_REPOSITORY");
+    return preg_replace(
+        '/!\[(.*)]\(\/(.*)\)/',
+        "![$1](https://raw.githubusercontent.com/$github_repository/$branch_name/$2)",
+        $file_contents
+    );
+}
+
 // Now process all of the other changed content
 $diff = shell_exec('git diff --name-only HEAD^..HEAD');
 if ($diff == '') {
@@ -207,6 +218,7 @@ if ($diff == '') {
             $file_contents = get_file_contents_with_header($file);
             if (str_ends_with($file, '.md') || str_ends_with($file, '.markdown')) {
                 $file_contents = fix_pagelinks_render($file_contents);
+                $file_contents = replace_github_image_urls($file_contents);
             }
             curl_setopt($ch, CURLOPT_URL, 'https://api.omg.lol/address/' . $argv[1] . '/weblog/entry/' . urlencode($filename));
             curl_setopt($ch, CURLOPT_POST, 1);
