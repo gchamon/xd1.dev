@@ -17,12 +17,14 @@ That made me switch to Gnome, and shortly after to Hyprland.
 You can read more about this in my previous post: [Hyprland crash course](/2024/03/hyprland-crash-course).
 
 At that time, while switching to these different environments, SDDM stopped working with a login loop, but I didn't give it much thought because GDM worked fine and I had work to do.
-However I did some investigating and it turned out that SDDM and Hyprland would work OK if I had a new user. I couldn't look into it further, however odd it was.
+However I did some investigating and it turned out that SDDM and Hyprland would work OK if I had a fresh user. I couldn't look into it further, however odd it was.
 
 Fast forward to yesterday, and having totally forgotten about this brief hickup I decided to give SDDM a try because I was purging Gnome from my system, having now
-a very stable and Hyprland setup.
+a very stable Hyprland setup.
 
-And it worked! Well, it appeard so, because I installed it, experimented with some themes, and logging in and out, all was well in Roswell.
+And it worked! Well, it appeared to do so, because I installed SDDM, experimented with some themes, logging in and out...
+
+All was well in Roswell.
 
 Until I rebooted.
 
@@ -31,9 +33,9 @@ Until I rebooted.
 Looking back with the benefit of foresight I should have remembered that ocasion where SDDM wasn't working, but I honestly thought it was something I did recently,
 not a long running issue.
 
-To add insult to injury, if I would login to another TTY and restart SDDM it would work, which reinforced this false assumption.
+To add insult to injury, if I would login to another TTY and restart SDDM, the graphical login would start working again, which reinforced this false assumption.
 
-So I started crippling my system, removing traces from X11 configuration files...
+So I started crippling my system, removing traces from X11 configuration files, looking for a culprit...
 
 At one point, the login loop turned into this:
 
@@ -50,28 +52,27 @@ I had to reinstall and restore the backup yet again.
 ## The issue crops up
 
 So I pulled my Ventoy USB containing the Archlinux install image and proceded with yet another system installation. Sure now with `archinstall` it has never been easier to install it,
-it feels like an eternity when you are already past midnight and just want to go rest...
+it feels like an eternity when you are already past midnight and just want to go to bed...
 
-So it installed, without issues, and booted without issues, Hyprland + SDDM and all. There I thought all was well... I guess I really only had misconfigured something recently.
+So the installation went through without issues and booted fine, Hyprland + SDDM and all. There I thought all was well again... "I guess I really only had misconfigured something recently..."
 
 That was before restoring my `/home` and `/etc/` folder...
 
-I still need to lay out in details how I backup my files, but the gist of it is I use borg using [this repository](https://github.com/gchamon/borg-automated-backups) for automation
-and [this public gist](https://gist.github.com/gchamon/a10a23e258477e8eca67c4aa84aaccb5) for instructions.
+I still need to lay out in details of how I backup my files, but the gist of it is I use borg with some [automation scripts](https://github.com/gchamon/borg-automated-backups)
+and [this public gist](https://gist.github.com/gchamon/a10a23e258477e8eca67c4aa84aaccb5) for restoration instructions.
 
-So after passing the stage where I restore and reboot the issue comes back.
+So after restoring my files and rebooting, there was it again, the nasty little white screen of pain and hopelessness.
 
-My backups were tainted...
+My backups were tainted... Years of it.
 
-Years of backup. They were not big, ~8GB for the home folder, but they were old...
-
+They were not big, ~8GB for the home folder, but they were old... Maybe over 6 years of accumulating undocumented configurations.
 This is a side effect from backups. They do exactly what they set out to do. To stand the test of time. And with that comes bitrot.
 
 ## Arriving at the solution
 
 At this point I remembered the time when I tested with a fresh user, and sure enough logging in with the test user, untainted by the cursed backup, I could login to my graphical system.
 
-Now I turn to my many dotfiles... First to the main ones. Removing `.local`, `.cache` and `.config`. They did nothing to the issue, which persisted.
+Now I turn to my many dotfiles... first to the main ones. Removing `.local`, `.cache` and `.config`. They did nothing to the issue, which persisted.
 
 That was actually a relief. The main configurations or data are in those folders (no not you `.cache` you could go away for all I care).
 
@@ -79,7 +80,7 @@ So I nuked all the other dot folders appart from some I knew couldn't be related
 
 But what was it? What caused it?
 
-To figure it out, I listed the dot files/folders that remainend and compared them against the inventory of dot files I extracted from my borg archive. These were the files that were deleted:
+To figure it out, I listed the dot files/folders that remained and compared them against the inventory of dot files I extracted from my borg archive. These were the files that were deleted:
 
 ```
 .aws
@@ -123,7 +124,7 @@ To figure it out, I listed the dot files/folders that remainend and compared the
 .zprofile
 ```
 
-So I did what every sane person would do and ~added one by one until the issue came back~ asked ChatGPT what files were more likely to be associated with the issue.
+So I did what every sane person would do and ~added one by one until the issue came back~ asked ChatGPT which files were more likely to be associated with the issue.
 
 It produced a list of five files, from which I reduced to two, `.dmrc` and `.zprofile`.
 
@@ -139,4 +140,4 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 fi
 ```
 
-Why it was there, I will never know. The need for it was lost to time and buried in sand. But one lesson will remain, which is to **clean you HOME folder**.
+Why it was there, I will never know, the need for it being lost to time and buried in sand. But one lesson will remain, which is to **clean you HOME folder**.
