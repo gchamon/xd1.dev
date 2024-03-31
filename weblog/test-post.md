@@ -146,3 +146,10 @@ classDiagram
 
 ```
 
+## Easier images from github
+
+This feature should rewrite image tags when syncrhonizing articles to weblog. I should only have to write relative paths to github, but when sending to weblog
+they should be rewritten with the full URL, thus working on both platforms without me having to commit the full URL.
+
+![test-image](./images/test-image.jpg)
+
