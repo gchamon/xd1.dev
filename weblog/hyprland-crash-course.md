@@ -5,6 +5,8 @@ Tags: tutorial, tech, linux
 
 # Hyprland crash course
 
+**EDIT** I made my config files available here: [gchamon/.config](https://github.com/gchamon/.config).
+
 For the past week I have been configuring hyprland and using it as my daily driver.
 Coming from major Desktop Environments like KDE or Gnome, this was definitely quite challanging,
 specially when implementing features that we take it for granted on these DEs, like screen sharing or screenshot annotating.
