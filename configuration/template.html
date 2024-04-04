@@ -164,10 +164,6 @@
             text-decoration: none;
             color: var(--foreground);
         }
-
-        .language-mermaid {
-            background-color: var(--mermaid-background-color) !important;
-        }
     </style>
 </head>
 
@@ -175,9 +171,12 @@
     <script src="/prism.js"></script>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({startOnLoad: false});
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark'
+        });
         await mermaid.run({
-            querySelector: '.language-mermaid',
+            querySelector: '.language-mermaid'
         });
     </script>
     <div class="content-page">
