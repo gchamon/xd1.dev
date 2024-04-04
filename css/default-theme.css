@@ -3,7 +3,6 @@
     --background: #f8f9fa;
     --link: #0b7285;
     --accent: #868e96;
-    --mermaid-background-color: white;
 }
 
 @media (prefers-color-scheme: dark) {
