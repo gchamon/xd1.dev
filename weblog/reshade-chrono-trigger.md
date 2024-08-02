@@ -5,6 +5,9 @@ Tags: tutorial, linux, gaming
 
 # Installing ReShade for the Steam version of Chrono Trigger on Linux
 
+This blog entry is also [posted to the Steam community forums](https://steamcommunity.com/app/613830/discussions/0/4521135947675877654/), if you want to take a look there and comment, while I build up the motivation to implement and actual comment system
+for this blog LOL.
+
 ## Introduction
 
 The title is quite the mouthful huh... but I didn't seem to find a good guide to do that easily on linux, so here I am consolidating this knowledge for future reference.
