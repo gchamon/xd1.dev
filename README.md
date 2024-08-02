@@ -1,38 +1,6 @@
-# weblog.lol GitHub Action
+# xd1.dev
 
-This repository holds the weblog.lol GitHub Action and documentation. All other omg.lol material (including weblog.lol stuff) can be found in the [omg.lol repository](http://github.com/neatnik/omg.lol/).
+This is the repository that is the source of truth for my blog hosted at <https://xd1.dev>.
 
-## Setting up the action
-
-1. First, create a GitHub repo to hold your weblog content.
-
-2. Add the file `.github/workflows/main.yml` with this content in it:
-
-```
-on: [push]
-
-jobs:
-  weblog_import:
-    runs-on: ubuntu-latest
-    name: weblog.lol
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
-      - id: weblog_import
-        uses: neatnik/weblog.lol@v1
-        env:
-          ADDRESS: your-address-here
-          WEBLOG_API_KEY: ${{ secrets.WEBLOG_API_KEY }}
-```
-
-3. Change the `your-address-here` value above to your own omg.lol address (just the address itself, e.g. `foobar`).
-
-4. In your repo settings, click **Secrets**, and then **Actions**. Click **New repository secret**, and add the following:
-
-  - Name: `WEBLOG_API_KEY`
-  - Secret: _your omg.lol API key_ (you can find this on [your omg.lol account page](https://home.omg.lol/account), at the very bottom)
-
-5. Add a folder to your repo called `weblog`. You can store your posts here, using whatever directory structure you’d like.
-
-6. _Optional:_ Add a folder to your repo called `configuration`. In that folder, you can store your `template.html` file and your `configuration.txt` file if you’d like to manage your template and configuration through your repo.
+The automation is based on the upstream repo, but is heavily modified to make it easy for me to upload images to github and have them reflected in the blog, as well as
+fixing some quirks in the way that weblog handles markdown, so that it plays well with prism.js for displaying code with syntax highlight.
