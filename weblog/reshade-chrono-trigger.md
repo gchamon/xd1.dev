@@ -12,7 +12,7 @@ The title is quite the mouthful huh... but I didn't seem to find a good guide to
 The steam version of Chrono Trigger is supposed to be the most feature complete if you don't count the DS version, that you can buy today. So I snatched it for what would
 translate to 4 US bucks and started playing.
 
-Out of the box, the experience is reasonable enough. You get a working game, that on linux and with proton 9 is very stable.
+Out of the box, the experience is reasonable enough. You get a very stable working game on linux with proton 9.
 
 However those that are a little more... for a lack of a better word, discerning when it comes to pixel art and CRT, will find the steam version troublingly lacking in what
 it delivers for a "high resolution" experience. It's basically what looks like 2xSal or Super Eagle... it's a mess. And it's either that or the original pixelated experience.
@@ -43,7 +43,7 @@ third party heroes, and the one go-to script for that is [kevinlekiller/reshade-
 
 Installing it automatically for Chrono Trigger won't work though. It correctly identifies the architecture of the build, but fails to derive the graphics API.
 
-Having that said, Chrono Trigger runs with a 32bit executable and used the OpenGL api, so when you run `reshade-linux.sh` you need to pass this information to the script:
+Having that said, Chrono Trigger runs with a 32bit executable and uses the OpenGL api, so when you run `reshade-linux.sh` you need to pass this information to the script:
 
 ```
 $ reshade-linux.sh
