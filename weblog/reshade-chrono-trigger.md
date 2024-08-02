@@ -28,7 +28,7 @@ And this is with the "high resolution" option activated:
 
 ![high-res](/images/chrono-trigger-reshade/high-res.png)
 
-That does no justice to how complex and interesting pixel art designed for CRT monitors actually is. If you want to have a look at it, I belive
+That does no justice to how complex and interesting pixel art designed for CRT monitors actually is. If you want more info about the art behind pixel art and CRT monitors, I belive
 [this post](https://www.datagubbe.se/crt/) is really interesting. There is a [comparison of different scaling algorithms](https://en.wikipedia.org/wiki/Pixel-art_scaling_algorithms)
 on Wikipedia that also is worth taking a look.
 
