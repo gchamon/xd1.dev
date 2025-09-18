@@ -198,4 +198,4 @@ fall](https://www.amazon.com.br/Why-Empires-Fall-America-Future/dp/0300280084).
 
 ## Change history
 
-- [add responses and changed wording](https://github.com/gchamon/xd1.dev/pull/6)
+- [add responses and changed wording](https://github.com/gchamon/xd1.dev/pull/6/files)
