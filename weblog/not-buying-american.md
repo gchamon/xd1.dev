@@ -58,8 +58,8 @@ what Reason studios did to screw over their customers by removing the option to
 activate older products that still work fine. I am also a musician in my spare
 time, mostly hobbyist, but I did purchase music production software before and
 I could just as easily have been a victim of such customer-hostile practices. I
-don't need to be American to be an interested party when laws, or lack thereof,
-of foreign country directly affects me.
+find it quire unsettling when laws, or lack thereof, of foreign country
+directly affects me.
 
 ## Current state of things
 
@@ -144,3 +144,58 @@ Nothing is too big that it can't be replaced.
 
 If you want to comment on this blog post, I invite you to follow the dicussions
 on [Hackernews](https://news.ycombinator.com/item?id=45277346).
+
+## Responses
+
+Since the publication of this rant yesterday, it got quite a bit of traction in
+HN that I honestly wasn't expecting. Some very interesting debates, but I'd
+like to address two recurring themes that I feel wasn't properly developed in
+the first iteration of this publication.
+
+### Reason isn't an American company
+
+I should have done a better job researching the company as it's a Swedish
+company. I am changing the wording in the paragraph that cites the company. It
+was intended to be just an anecdote of what prompted me to write this article,
+but I shouldn't have used it as an example of the current situation for
+consumer protection in America.
+
+### Reason is the sole example in the publication
+
+It isn't. It's just the only one that is directly mentioned here. There are
+several links to other articles that do a better job that I could ever do in
+cataloguing US companies that illustrate the points in the article. I suggest
+everyone reading this to open the articles linked in this publication.
+
+### Other companies in the world also apply anti-consumer practices
+
+Yes, and the point o this publication isn't to advocate for an all-out digital
+veganism. The rationale -- which I should have developed better, because now it
+feels like shooting an arrow and drawing a target afterwards -- is that if by
+choosing not to buy American products the US would be pressured to change it's
+laws in favor of protecting the consumer, this would ripple across the free
+world and actually change things.
+
+[Some examples cited](https://news.ycombinator.com/item?id=45277977) include
+Samsung, Brother and Epson. I'd say if you don't want to buy from them, go for
+it. I'm ditching Samsung next time I'm buying a smartphone because [they make
+it purposefully complicated to disable notifications for they built-in
+bloatware](https://us.community.samsung.com/t5/Galaxy-S23/Can-t-disable-Galaxy-Store-notifications/m-p/2864075#M43549).
+
+However I think the best you can achieve with ditching a company is making this
+specific company change its policies. It does very little with the widespread
+consumer-hostile stance companies have adopted.
+
+Targeting instead the cultural and economic leader of the west has better
+chances of promoting changes that will ripple across all the markets that are
+influenced by the US. The US is undisputedly the wealthiest country. It has
+therefore the responsibility of setting the example for the rest of the world.
+
+And in all seriousness, what is it that America can't take a little bit of
+hopefully constructive criticism? If it can't, I'm sorry to say, it's already
+doomed to fail, since this is in part of [why empires
+fall](https://www.amazon.com.br/Why-Empires-Fall-America-Future/dp/0300280084).
+
+## Change history
+
+- [add responses and changed wording](https://github.com/gchamon/xd1.dev/pull/6)
