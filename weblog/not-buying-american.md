@@ -197,3 +197,5 @@ doomed to fail, since this is in part of [why empires
 fall](https://www.amazon.com.br/Why-Empires-Fall-America-Future/dp/0300280084).
 
 ## Change history
+
+- [add responses and changed wording](https://github.com/gchamon/xd1.dev/pull/6)
