@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: weblog.lol
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 2
             # - id: weblog_import
