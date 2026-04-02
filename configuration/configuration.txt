@@ -17,8 +17,8 @@ Landing page template: Landing Page Template
 Separator:  · 
 // Navigation: about, another-page, <a href="https://example.com">Example</a>, [Example](https://example.com)
 Files path: /files/
-Landing page post count: 1
-// Landing page post length: 45 words
+Landing page post count: 10
+// Landing page post length: 60 words
 Post template: Post Template
 
 
@@ -93,8 +93,8 @@ Recent posts format: <<[
 ;; ---------------------
 
 Post list format: <<[
-<ul>
-[post:begin]<li><a href="$location">$title</a></li>[post:end]
+<ul class="post-list">
+[post:begin]<li class="post-preview"><h3><a href="$location">$title</a></h3><div class="post-meta"><a class="post-link" href="$location">Read more</a><aside class="post-info"><i class="fa-solid fa-clock"></i> $date</aside></div></li>[post:end]
 </ul>]>>
 
 
