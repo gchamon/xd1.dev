@@ -76,6 +76,9 @@ language:
 - `OKR` corresponds to GitLab OKRs
 - `Test case` corresponds to GitLab test cases
 
+Epic membership is declared from the epic side through `child_ids`; work items
+do not carry a separate parent-epic metadata field.
+
 Target repositories may adapt provider workflows later without renaming the
 planning model.
 
@@ -83,12 +86,19 @@ planning model.
 
 If a work item includes `## Status`, use short prose values such as:
 
-- `Backlog`
-- `Planned`
-- `Doing`
-- `Done`
+- `backlog`
+- `planned`
+- `doing`
+- `done`
+- `cancelled`: the work item no longer makes sense because priority or focus
+  changed
+- `abandoned`: the work item still makes sense, but the repository will not
+  spend resources on it
 
-If status is omitted, treat the work item as `Backlog`.
+`killed` is reserved for GitLab graveyard history when a managed work item is
+removed from the repository. Do not write `killed` in repo work-item markdown.
+
+If status is omitted, treat the work item as `backlog`.
 
 ## Migration
 
