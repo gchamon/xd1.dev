@@ -2,7 +2,7 @@
 
 ## Status
 
-doing
+done
 
 ## Outcome
 
@@ -10,7 +10,10 @@ A script or tool that converts `weblog/*.md` into `dist/*.html` using Jinja2 or 
 
 ## Decision Changes
 
-- None.
+- **Content source**: Posts live in `entries/`, `ops/`, `hal/` at repo root — not `weblog/`. Additional categories are auto-discovered from any root directory containing `.md` files.
+- **Host-agnostic URLs**: Implemented via `--base-url` CLI flag (env: `BASE_URL`, default `/`). The generator normalises the prefix and splices it into every internal `href`/`src`. Deployers supply the value; the generator has no notion of GitHub or GitLab.
+- **Markdown library**: Python-Markdown with `meta`, `fenced_code`, and `tables` extensions.
+- **Template engine**: Jinja2 via `PackageLoader`; templates live in `generator/templates/`.
 
 ## Main Quests
 

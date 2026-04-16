@@ -2,28 +2,31 @@
 
 {% block title %}{{ page.title }} &mdash; {{ site_title }}{% endblock %}
 
+{% block meta_bar %}
+<div class="meta-bar">
+  <div class="meta-item"><b>[slug]</b> <span>{{ page.slug }}</span></div>
+  <div class="meta-item"><b>[category]</b> <span>{{ page.category }}</span></div>
+  {% if page.date %}
+  <div class="meta-item"><b>[date]</b> <span>{{ page.date.strftime('%Y-%m-%d') }}</span></div>
+  {% endif %}
+  <div class="meta-item">
+    <a class="nav-link" href="{{ base_url }}{{ page.category }}/">&larr; BACK</a>
+  </div>
+</div>
+{% endblock %}
+
 {% block content %}
 <article>
     {{ page.html_body | prefix_urls(base_url) | safe }}
 
-    {% if page.date or page.tags %}
-    <footer>
-        {% if page.date %}
-        <p class="post-meta">{{ page.date.strftime('%B %d, %Y %I:%M %p') }}</p>
-        {% endif %}
+    <footer class="post-meta">
         {% if page.tags %}
-        <p>
+        <div class="tag-list">
             {% for tag in page.tags %}
-            <a class="tag" href="{{ base_url }}tags/{{ tag }}/">{{ tag }}</a>
+            <a class="tag-item" href="{{ base_url }}tags/{{ tag }}/">{{ tag }}</a>
             {% endfor %}
-        </p>
+        </div>
         {% endif %}
     </footer>
-    {% endif %}
 </article>
-
-{% if not is_category_index %}
-<hr>
-<p><a href="{{ base_url }}{{ page.category }}/">&larr; Back to {{ page.category }}</a></p>
-{% endif %}
 {% endblock %}

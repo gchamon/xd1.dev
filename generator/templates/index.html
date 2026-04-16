@@ -2,20 +2,42 @@
 
 {% block title %}{{ site_title }}{% endblock %}
 
+{% block meta_bar %}
+<div class="meta-bar">
+  <div class="meta-item"><b>[mode]</b> <span>recent_entries</span></div>
+  <div class="meta-item"><b>[count]</b> <span>{{ recent_posts|length }}</span></div>
+</div>
+{% endblock %}
+
 {% block content %}
-<h1>Recent entries</h1>
-{% if recent_posts %}
-<ul>
-    {% for page in recent_posts %}
-    <li>
-        <a href="{{ base_url }}{{ page.category }}/{{ page.slug }}/">{{ page.title }}</a>
-        {% if page.date %}
-        <span class="post-meta">{{ page.date.strftime('%Y-%m-%d') }}</span>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No entries yet.</p>
-{% endif %}
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Title</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for page in recent_posts %}
+      <tr>
+        <td class="yellow">
+          <a class="nav-link" href="{{ base_url }}{{ page.category }}/">{{ page.category }}</a>
+        </td>
+        <td class="name">
+          <a class="nav-link" href="{{ base_url }}{{ page.category }}/{{ page.slug }}/">{{ page.title }}</a>
+        </td>
+        <td class="comment">
+          {% if page.date %}{{ page.date.strftime('%Y-%m-%d') }}{% else %}N/A{% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="3" class="empty">No entries found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

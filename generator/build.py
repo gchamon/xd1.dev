@@ -1,10 +1,9 @@
-"""Build orchestrator: discover → parse → render → write."""
-
 from __future__ import annotations
 
 import re
 import shutil
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -45,7 +44,6 @@ def _collect_tags(content: dict[str, list[Page]]) -> dict[str, list[Page]]:
                 tags[tag].append(page)
     # Sort each tag's pages newest-first.
     for pages in tags.values():
-        from datetime import datetime
         pages.sort(key=lambda p: p.date or datetime.min, reverse=True)
     return dict(tags)
 
@@ -79,6 +77,7 @@ def build(source_root: Path, output_dir: Path, base_url: str = "/") -> None:
         "categories": categories,
         "site_title": "xd1",
         "base_url": base_url,
+        "now": datetime.utcnow(),
     }
 
     # --- Landing page (recent entries) ---
@@ -86,7 +85,6 @@ def build(source_root: Path, output_dir: Path, base_url: str = "/") -> None:
     all_pages = []
     for pages in content.values():
         all_pages.extend(pages)
-    from datetime import datetime
     all_pages.sort(key=lambda p: p.date or datetime.min, reverse=True)
     recent = all_pages[:10]
 
