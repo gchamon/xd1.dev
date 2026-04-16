@@ -178,8 +178,11 @@ as the category index. The template receives `is_category_index=True` so it
 can suppress the "back to listing" link.
 
 **Shared template context.** Every template receives `categories` (the sorted
-list of discovered category names) and `site_title` (`"xd1"`). The navigation
-bar is built from `categories` in `base.html`.
+list of discovered category names), `site_title` (`"xd1"`), and `base_url`
+(the normalised URL prefix passed via `--base-url` / `$BASE_URL`; defaults to
+`"/"`). The navigation bar is built from `categories` in `base.html`, and all
+internal hrefs are spliced with `base_url` so the site can be served either at
+the document root or under a sub-path (e.g. GitHub project pages).
 
 ### Templates
 
@@ -198,5 +201,8 @@ designed to be replaced wholesale by the theme port in work item
 ### Static assets
 
 The directories `css/`, `js/`, and `images/` are copied to `dist/` unchanged.
-Markdown files reference images with absolute paths like `/images/...`, which
-resolve correctly when the site is served from `dist/` as the document root.
+Markdown files reference images with absolute paths like `/images/...`. The
+`prefix_urls` Jinja filter (see `build.py`) rewrites those `src`/`href`
+attributes in rendered post bodies to start with `base_url`, so absolute paths
+work under any deployment prefix. Protocol-relative (`//cdn`) and fully
+qualified (`https://`) URLs are left untouched.

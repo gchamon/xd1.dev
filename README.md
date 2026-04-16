@@ -64,7 +64,18 @@ uv run python -m generator --output build
 
 # Different source root
 uv run python -m generator --source /path/to/content
+
+# Deploy under a sub-path (e.g. GitHub project pages)
+uv run python -m generator --base-url /xd1.dev/
+# Equivalent:
+BASE_URL=/xd1.dev/ uv run python -m generator
 ```
+
+`--base-url` (or the `BASE_URL` env var) prefixes every internal link.
+Default is `/` which suits root-served deployments. Pass `/xd1.dev/` when
+serving from `https://<host>/xd1.dev/` so nav, post, and image URLs resolve
+under the sub-path. The value is auto-normalised so `xd1.dev`, `/xd1.dev`,
+and `/xd1.dev/` all produce the same result.
 
 ### Serving locally
 

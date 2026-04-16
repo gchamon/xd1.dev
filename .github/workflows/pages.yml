@@ -29,6 +29,8 @@ jobs:
 
       - run: uv sync
       - run: uv run python -m generator
+        env:
+          BASE_URL: /${{ github.event.repository.name }}/
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -36,10 +36,10 @@
 </head>
 <body>
     <nav>
-        <a class="site-title" href="/">{{ site_title }}</a>:
+        <a class="site-title" href="{{ base_url }}">{{ site_title }}</a>:
         {% for cat in categories %}
             {% if not loop.first %}<span class="nav-sep">&#x25C8;</span>{% endif %}
-            <a class="nav-link" href="/{{ cat }}/">{{ cat }}</a>
+            <a class="nav-link" href="{{ base_url }}{{ cat }}/">{{ cat }}</a>
         {% endfor %}
     </nav>
 

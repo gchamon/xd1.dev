@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import shutil
 from collections import defaultdict
 from pathlib import Path
@@ -12,6 +13,22 @@ from generator.content import Page, load_content
 
 # Directories copied verbatim to dist/.
 STATIC_DIRS = ("css", "js", "images")
+
+# Match ``src="/...`` or ``href="/...`` but not protocol-relative ``//cdn``
+# and not absolute ``https://``. Quote-style is fixed to ``"`` because both
+# Python-Markdown and Jinja autoescape emit double-quoted attributes.
+_URL_ATTR_RE = re.compile(r'((?:src|href)=")/(?!/)')
+
+
+def _prefix_urls(html: str, base_url: str) -> str:
+    """Prefix every absolute ``/…`` ``src``/``href`` in *html* with *base_url*.
+
+    No-op when *base_url* is ``"/"``. Leaves protocol-relative (``//cdn``) and
+    fully-qualified (``https://…``) URLs untouched.
+    """
+    if base_url == "/":
+        return html
+    return _URL_ATTR_RE.sub(lambda m: m.group(1) + base_url, html)
 
 
 def _write(path: Path, content: str) -> None:
@@ -33,8 +50,14 @@ def _collect_tags(content: dict[str, list[Page]]) -> dict[str, list[Page]]:
     return dict(tags)
 
 
-def build(source_root: Path, output_dir: Path) -> None:
-    """Build the static site from *source_root* into *output_dir*."""
+def build(source_root: Path, output_dir: Path, base_url: str = "/") -> None:
+    """Build the static site from *source_root* into *output_dir*.
+
+    *base_url* is spliced in front of every internal link and must already be
+    normalised (leading and trailing ``/``). Callers should pass ``"/"`` for
+    a root-served deployment and something like ``"/xd1.dev/"`` for a
+    project-page deployment.
+    """
 
     # Clean output.
     if output_dir.exists():
@@ -51,9 +74,11 @@ def build(source_root: Path, output_dir: Path) -> None:
         loader=PackageLoader("generator", "templates"),
         autoescape=select_autoescape(["html"]),
     )
+    env.filters["prefix_urls"] = _prefix_urls
     shared_ctx = {
         "categories": categories,
         "site_title": "xd1",
+        "base_url": base_url,
     }
 
     # --- Landing page (recent entries) ---

@@ -4,7 +4,7 @@
 
 {% block content %}
 <article>
-    {{ page.html_body | safe }}
+    {{ page.html_body | prefix_urls(base_url) | safe }}
 
     {% if page.date or page.tags %}
     <footer>
@@ -14,7 +14,7 @@
         {% if page.tags %}
         <p>
             {% for tag in page.tags %}
-            <a class="tag" href="/tags/{{ tag }}/">{{ tag }}</a>
+            <a class="tag" href="{{ base_url }}tags/{{ tag }}/">{{ tag }}</a>
             {% endfor %}
         </p>
         {% endif %}
@@ -24,6 +24,6 @@
 
 {% if not is_category_index %}
 <hr>
-<p><a href="/{{ page.category }}/">&larr; Back to {{ page.category }}</a></p>
+<p><a href="{{ base_url }}{{ page.category }}/">&larr; Back to {{ page.category }}</a></p>
 {% endif %}
 {% endblock %}

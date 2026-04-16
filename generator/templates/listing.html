@@ -8,14 +8,14 @@
 <ul>
     {% for page in pages %}
     <li>
-        <a href="/{{ page.category }}/{{ page.slug }}/">{{ page.title }}</a>
+        <a href="{{ base_url }}{{ page.category }}/{{ page.slug }}/">{{ page.title }}</a>
         {% if page.date %}
         <span class="post-meta">{{ page.date.strftime('%Y-%m-%d') }}</span>
         {% endif %}
         {% if page.tags %}
         <span class="post-meta">
             {% for tag in page.tags %}
-            <a class="tag" href="/tags/{{ tag }}/">{{ tag }}</a>
+            <a class="tag" href="{{ base_url }}tags/{{ tag }}/">{{ tag }}</a>
             {% endfor %}
         </span>
         {% endif %}
