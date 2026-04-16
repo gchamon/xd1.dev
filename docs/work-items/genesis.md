@@ -2,7 +2,7 @@
 
 ## Status
 
-Planned
+In Progress
 
 ## Outcome
 
@@ -10,6 +10,12 @@ Establish the `docgraph` repository foundation using the Orisun methodology.
 
 The genesis work-item is supposed to ignite the exploration process of the
 problem domain, which will be the target of this work-item.
+
+## Decision Changes
+
+- **Epic Prioritization**:
+  - `docs/epics/blog-redesign.md`: CRITICAL priority.
+- **Scaffold Choice**: Deployed in `taoba` mode as per Orisun methodology.
 
 ## Main Quests
 
