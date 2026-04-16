@@ -66,6 +66,16 @@ uv run python -m generator --output build
 uv run python -m generator --source /path/to/content
 ```
 
+### Serving locally
+
+After building, serve the site with Python's built-in HTTP server:
+
+```bash
+python3 -m http.server -d dist 8000
+```
+
+Then open <http://localhost:8000>.
+
 ### Creating a new post
 
 ```bash
