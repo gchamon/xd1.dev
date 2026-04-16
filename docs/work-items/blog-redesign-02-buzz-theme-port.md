@@ -10,7 +10,12 @@ A Jinja2 template and CSS file that implements the `buzz` terminal aesthetic for
 
 ## Decision Changes
 
-- None.
+- **Generator location**: Python package at `generator/` with Jinja2 templates under `generator/templates/`.
+- **Content directories**: Blog posts now live in `entries/` (not `weblog/`). Additional categories: `ops/` (projects), `hal/` (about). Directory names are auto-discovered as navigation categories.
+- **Navigation pattern**: `xd1: entries ◈ ops ◈ hal` — categories auto-populated from discovered content directories.
+- **Naming lore**: Discovery XD-1 / 2001: A Space Odyssey theme.
+- **Template blocks**: `base.html` defines blocks `title`, `content`, `head_extra`. Theme work targets these blocks and the inline `<style>` in `base.html`.
+- **Dependencies**: `pyproject.toml` at repo root, managed via `uv`. Jinja2 3.1+ and Markdown 3.10+.
 
 ## Main Quests
 

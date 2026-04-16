@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} &mdash; {{ site_title }}{% endblock %}
+
+{% block content %}
+<article>
+    {{ page.html_body | safe }}
+
+    {% if page.date or page.tags %}
+    <footer>
+        {% if page.date %}
+        <p class="post-meta">{{ page.date.strftime('%B %d, %Y %I:%M %p') }}</p>
+        {% endif %}
+        {% if page.tags %}
+        <p>
+            {% for tag in page.tags %}
+            <a class="tag" href="/tags/{{ tag }}/">{{ tag }}</a>
+            {% endfor %}
+        </p>
+        {% endif %}
+    </footer>
+    {% endif %}
+</article>
+
+{% if not is_category_index %}
+<hr>
+<p><a href="/{{ page.category }}/">&larr; Back to {{ page.category }}</a></p>
+{% endif %}
+{% endblock %}

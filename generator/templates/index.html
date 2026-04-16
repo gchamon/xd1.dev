@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site_title }}{% endblock %}
+
+{% block content %}
+<h1>Recent entries</h1>
+{% if recent_posts %}
+<ul>
+    {% for page in recent_posts %}
+    <li>
+        <a href="/{{ page.category }}/{{ page.slug }}/">{{ page.title }}</a>
+        {% if page.date %}
+        <span class="post-meta">{{ page.date.strftime('%Y-%m-%d') }}</span>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No entries yet.</p>
+{% endif %}
+{% endblock %}

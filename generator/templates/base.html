@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ site_title }}{% endblock %}</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+            max-width: 50em;
+            margin: 2em auto;
+            padding: 0 1em;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: #1a1a2e;
+        }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+        nav { margin-bottom: 2em; }
+        .nav-sep { color: #6272a4; margin: 0 0.3em; }
+        .nav-link { text-decoration: none; color: #6272a4; }
+        .nav-link:hover { color: #8be9fd; }
+        .site-title { color: #50fa7b; text-decoration: none; font-weight: bold; }
+        h1, h2, h3 { color: #f8f8f2; }
+        .post-meta { color: #6272a4; font-size: 0.85em; margin-bottom: 0.5em; }
+        .tag { display: inline-block; background: #44475a; color: #f8f8f2; padding: 0.1em 0.5em; border-radius: 0.3em; text-decoration: none; font-size: 0.85em; margin-right: 0.3em; }
+        .tag:hover { background: #6272a4; }
+        hr { border: 0; height: 1px; background: #44475a; margin: 2em 0; }
+        code { background: #282a36; padding: 0.15em 0.3em; border-radius: 0.3em; }
+        pre code { display: block; padding: 1em; overflow-x: auto; background: #282a36; }
+        img { max-width: 100%; }
+        footer { margin-top: 4em; padding-top: 1em; border-top: 1px solid #44475a; color: #6272a4; font-size: 0.85em; }
+    </style>
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <a class="site-title" href="/">{{ site_title }}</a>:
+        {% for cat in categories %}
+            {% if not loop.first %}<span class="nav-sep">&#x25C8;</span>{% endif %}
+            <a class="nav-link" href="/{{ cat }}/">{{ cat }}</a>
+        {% endfor %}
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>{{ site_title }} &mdash; generated with xd1</p>
+    </footer>
+</body>
+</html>

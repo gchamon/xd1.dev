@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tag }} &mdash; {{ site_title }}{% endblock %}
+
+{% block content %}
+<h1>Tagged: {{ tag }}</h1>
+<ul>
+    {% for page in pages %}
+    <li>
+        <a href="/{{ page.category }}/{{ page.slug }}/">{{ page.title }}</a>
+        {% if page.date %}
+        <span class="post-meta">{{ page.date.strftime('%Y-%m-%d') }}</span>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

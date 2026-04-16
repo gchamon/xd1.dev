@@ -11,7 +11,7 @@ else
     tags_header=""
 fi
 
-tee weblog/"$filename".md <<EOF
+tee entries/"$filename".md <<EOF
 ---
 Date: $(date +"%Y-%m-%d %H:%M")$(printf "$tags_header")
 ---
