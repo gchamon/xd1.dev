@@ -49,7 +49,7 @@ uv sync
 ### Building the site
 
 ```bash
-.venv/bin/python -m generator
+uv run python -m generator
 ```
 
 This reads every content category directory at the repo root (`entries/`,
@@ -60,10 +60,10 @@ to HTML, and writes the result to `dist/`.
 
 ```bash
 # Custom output directory
-.venv/bin/python -m generator --output build
+uv run python -m generator --output build
 
 # Different source root
-.venv/bin/python -m generator --source /path/to/content
+uv run python -m generator --source /path/to/content
 ```
 
 ### Creating a new post
