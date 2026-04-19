@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ site_title }}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ base_url }}css/theme-{{ theme }}.css">
   <link rel="stylesheet" href="{{ base_url }}css/buzz.css">
   <style>
     /* Inline overrides for the blog generator context */
@@ -42,7 +43,7 @@
     <footer>
       <div class="meta-bar">
         <div class="meta-item"><b>[generator]</b> <span>xd1</span></div>
-        <div class="meta-item"><b>[theme]</b> <span>buzz-port</span></div>
+        <div class="meta-item"><b>[theme]</b> <span>{{ theme }}</span></div>
         <div class="meta-item"><b>[last_build]</b> <span>{{ now.strftime('%Y-%m-%d %H:%M') }} UTC</span></div>
       </div>
       <p>&copy; {{ now.strftime('%Y') }} xd1.dev &mdash; a static transmission from the edge of the internet.</p>

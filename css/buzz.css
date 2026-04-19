@@ -1,16 +1,4 @@
-:root {
-  --bg: #282a36;
-  --fg: #f8f8f2;
-  --selection: #44475a;
-  --comment: #6272a4;
-  --cyan: #8be9fd;
-  --green: #50fa7b;
-  --orange: #ffb86c;
-  --pink: #ff79c6;
-  --purple: #bd93f9;
-  --red: #ff5555;
-  --yellow: #f1fa8c;
-}
+
 
 * {
   box-sizing: border-box;
@@ -148,12 +136,12 @@ article img {
 
 .nav-link:hover {
   color: var(--cyan);
-  text-shadow: 0 0 5px rgba(139, 233, 253, 0.5);
+  text-shadow: 0 0 5px var(--cyan-shadow);
 }
 
 .nav-link.active {
   color: var(--green);
-  text-shadow: 0 0 5px rgba(80, 250, 123, 0.5);
+  text-shadow: 0 0 5px var(--green-shadow);
 }
 
 .nav-sep {
@@ -281,7 +269,7 @@ th.sort-desc::after {
 
 td {
   padding: 0;
-  border-bottom: 1px solid rgba(68, 71, 90, 0.3);
+  border-bottom: 1px solid var(--selection-semi);
   vertical-align: middle;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -409,7 +397,7 @@ code {
 
 .confirm-opts {
   display: none;
-  background: rgba(255, 184, 108, 0.2);
+  background: var(--orange-dim);
 }
 
 .opt,
@@ -429,23 +417,23 @@ code {
 
 .btn-r:hover {
   color: var(--green);
-  background: rgba(80, 250, 123, 0.1);
+  background: var(--green-dim);
 }
 
 .btn-del:hover,
 .btn-x:hover {
   color: var(--red);
-  background: rgba(255, 85, 85, 0.1);
+  background: var(--red-dim);
 }
 
 .opt-y:hover {
   color: var(--green);
-  text-shadow: 0 0 5px rgba(80, 250, 123, 0.5);
+  text-shadow: 0 0 5px var(--green-shadow);
 }
 
 .opt-n:hover {
   color: var(--red);
-  text-shadow: 0 0 5px rgba(255, 85, 85, 0.5);
+  text-shadow: 0 0 5px var(--red-shadow);
 }
 
 ::-webkit-scrollbar {

@@ -1,0 +1,22 @@
+:root {
+  --bg: #2e3440;
+  --fg: #d8dee9;
+  --selection: #4c566a;
+  --comment: #616e88;
+  --cyan: #88c0d0;
+  --green: #a3be8c;
+  --orange: #d08770;
+  --pink: #b48ead;
+  --purple: #b48ead;
+  --red: #bf616a;
+  --yellow: #ebcb8b;
+
+  /* Derived colors */
+  --cyan-shadow: rgba(136, 192, 208, 0.5);
+  --green-shadow: rgba(163, 190, 140, 0.5);
+  --selection-semi: rgba(76, 86, 106, 0.3);
+  --orange-dim: rgba(208, 135, 112, 0.2);
+  --green-dim: rgba(163, 190, 140, 0.1);
+  --red-dim: rgba(191, 97, 106, 0.1);
+  --red-shadow: rgba(191, 97, 106, 0.5);
+}

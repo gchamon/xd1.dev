@@ -48,7 +48,7 @@ def _collect_tags(content: dict[str, list[Page]]) -> dict[str, list[Page]]:
     return dict(tags)
 
 
-def build(source_root: Path, output_dir: Path, base_url: str = "/") -> None:
+def build(source_root: Path, output_dir: Path, base_url: str = "/", theme: str = "dracula") -> None:
     """Build the static site from *source_root* into *output_dir*.
 
     *base_url* is spliced in front of every internal link and must already be
@@ -77,6 +77,7 @@ def build(source_root: Path, output_dir: Path, base_url: str = "/") -> None:
         "categories": categories,
         "site_title": "xd1",
         "base_url": base_url,
+        "theme": theme,
         "now": datetime.utcnow(),
     }
 
