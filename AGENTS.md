@@ -14,6 +14,30 @@ the actual text. Sorry about that, maybe one day I'll create a blog article for
 you so that you can write your own text using openclaw or something, let's
 see...
 
+### Prompting from markdown files
+
+Prompts expected to be addressed by the agent are HTML comments in markdown
+following this very simple contract:
+
+```markdown
+<!-- PROMPT: {prompt-body} -->
+```
+
+The agent is expected to introduce a new markdown under it in the following
+format:
+
+```markdown
+<!-- PROMPT: {prompt-body} -->
+<!--
+  RESPONSE: {"model": model_name, "timestamp": inference_time}
+    {response_body}
+-->
+```
+
+This behavior is called by asking for prompt resolution directly: `please
+address all prompts`. You should also accept requests to readdress a prompt or
+readdress all prompts, but only when directly asked by the user.
+
 ## Build, Test, and Development Commands
 
 There is no local build pipeline in this repo; changes are plain file edits plus deployment automation.
