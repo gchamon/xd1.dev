@@ -14,6 +14,27 @@ the filename (without .md), the title and optionally some tags. Example:
 ./mkweblog.sh not-buying-american "Not buying american anymore" "rant, opinion"
 ```
 
+## Hacker News discussions
+
+Hacker News has a public read API but no documented API for creating stories
+([official API documentation](https://github.com/HackerNews/API)). Submission
+must be done manually from the HN account.
+
+To link a post's discussion:
+
+1. Add `HN: submit` to the post's front matter and push the post so it is
+   published.
+2. Submit its canonical URL, `https://xd1.dev/YYYY/MM/<title-slug>`, through
+   Hacker News using the account configured in the repository Actions variable
+   `HN_USERNAME`.
+3. Copy the numeric item ID from the resulting HN URL and run the **HN
+   discussion** workflow with the repository-relative post path (for example,
+   `weblog/my-post.md`) and item ID.
+
+The workflow verifies that the item is a story by the configured account and
+links to the exact post URL, then commits the discussion link and publishes the
+updated post. The workflow cannot create the HN story.
+
 ## Force a full weblog resync
 
 The deploy workflow normally syncs only files changed in the latest commit. If the

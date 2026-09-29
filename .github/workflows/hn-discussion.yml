@@ -1,0 +1,48 @@
+name: HN discussion
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_path:
+        description: Repository-relative Markdown path, e.g. weblog/my-post.md
+        required: true
+        type: string
+      hn_item_id:
+        description: Numeric item ID from the manually submitted Hacker News story
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  link_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+
+      - name: Validate item and update post
+        env:
+          POST_PATH: ${{ inputs.post_path }}
+          HN_ITEM_ID: ${{ inputs.hn_item_id }}
+          HN_USERNAME: ${{ vars.HN_USERNAME }}
+        run: php .github/scripts/link-hn-discussion.php
+
+      - name: Commit discussion link
+        env:
+          POST_PATH: ${{ inputs.post_path }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$POST_PATH"
+          git commit -m "link HN discussion for $(basename "$POST_PATH" .md)"
+          git push origin HEAD:main
+
+      - name: Publish updated post
+        env:
+          ADDRESS: xd1
+          WEBLOG_API_KEY: ${{ secrets.WEBLOG_API_KEY }}
+        run: php -f weblog-import.php "$ADDRESS" "$WEBLOG_API_KEY"
